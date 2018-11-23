@@ -52,13 +52,14 @@ var move = int(0)
 
 var shot = false
 
+var blocks = int(0)
+
 func main() {
-	// Creates window and OpenGL context
 	wmgr, err := window.Manager("glfw")
 	if err != nil {
 		panic(err)
 	}
-	win, err := wmgr.CreateWindow(800, 600, "Mateusz Dera", false)
+	win, err := wmgr.CreateWindow(800, 600, "GoBall by Mateusz Dera", false)
 	if err != nil {
 		panic(err)
 	}
@@ -123,7 +124,6 @@ func main() {
 	})
 	scene_gui.Add(b3)
 
-	// Create scene for 3D objects
 	scene.Add(camera)
 
 	//Światło
@@ -228,6 +228,7 @@ func main() {
 												}
 												pos_z[x][y][z] = 0
 												scene.Remove(block_list[x][y][z])
+												blocks = blocks - 1
 
 												score = score + mnożnik
 											}
@@ -296,7 +297,7 @@ func main() {
 		//Napisy
 		napis_końcowy := fmt.Sprint("Mnożnik: ", math.Round(mnożnik), "    Wynik: ", math.Round(score), "   Najlepszy wynik: ", math.Round(best), "   Życia: ", lives)
 
-		if lives <= 0 {
+		if lives <= 0 || blocks <= 0 {
 			napis_końcowy = fmt.Sprint("KONIEC GRY   Twój wynik: ", math.Round(score), "   Najlepszy wynik: ", math.Round(best))
 		}
 
@@ -334,7 +335,10 @@ func create() {
 					}
 				}
 
-				fmt.Print(pos_z[x][y][z])
+				if pos_z[x][y][z] == 1 {
+					blocks = blocks + 1
+				}
+
 			}
 		}
 	}
@@ -349,8 +353,6 @@ func create() {
 		}
 	}
 
-	//scene.Remove(block_list[0][0][0])
-	//	scene.Add(cylinder_mesh)
 	create_cylinder(-1, -1)
 	create_player()
 	bottom()
