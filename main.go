@@ -2,13 +2,14 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"math"
 	"math/rand"
 	"os"
 	"runtime"
+	"strconv"
 
 	"github.com/g3n/engine/camera"
-	"github.com/g3n/engine/camera/control"
 	"github.com/g3n/engine/core"
 	"github.com/g3n/engine/geometry"
 	"github.com/g3n/engine/gls"
@@ -90,7 +91,7 @@ func main() {
 		aspect := float32(width) / float32(height)
 		camera.SetAspect(aspect)
 	})
-	control.NewOrbitControl(camera, win)
+	//control.NewOrbitControl(camera, win)
 
 	napis := gui.NewLabel("---")
 	napis.SetPosition(10, 10)
@@ -146,6 +147,20 @@ func main() {
 
 	// Czyszczenie ekranu
 	gs.ClearColor(0.21, 0.21, 0.21, 1.0)
+
+	//Ładowanie wyniku
+	b, err := ioutil.ReadFile("./game.save")
+	if err != nil {
+		fmt.Print(err)
+	}
+	str := string(b)
+
+	f, err := strconv.ParseFloat(str, 64)
+	if err != nil {
+		fmt.Print(err)
+	}
+
+	best = f
 
 	create()
 
