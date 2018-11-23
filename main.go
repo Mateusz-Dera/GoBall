@@ -320,7 +320,21 @@ func create() {
 	for x := 0; x < 15; x++ {
 		for y := 0; y < 15; y++ {
 			for z := 0; z < 5; z++ {
-				pos_z[x][y][z] = 0
+				rand := (rand.Float32() * 10)
+
+				pos_z[x][y][z] = 1
+
+				if rand < 5 {
+					pos_z[x][y][z] = 0
+				}
+
+				if z > 1 {
+					if pos_z[x][y][z-1] == 0 {
+						pos_z[x][y][z] = 0
+					}
+				}
+
+				fmt.Print(pos_z[x][y][z])
 			}
 		}
 	}
