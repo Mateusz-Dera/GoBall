@@ -314,6 +314,10 @@ func main() {
 
 		if lives <= 0 || blocks <= 0 {
 			napis_końcowy = fmt.Sprint("KONIEC GRY   Twój wynik: ", math.Round(score), "   Najlepszy wynik: ", math.Round(best))
+
+			if score > best {
+				napis_końcowy = fmt.Sprint("KONIEC GRY   Nowy najlepszy wynik: ", math.Round(score))
+			}
 		}
 
 		napis.SetText(napis_końcowy)
